@@ -3,7 +3,7 @@ pipeline {
        ID_DOCKER = "${ID_DOCKER_PARAMS}"
        IMAGE_NAME = "alpinehelloworld"
        IMAGE_TAG = "latest"
-//       PORT_EXPOSED = "80" à paraméter dans le job
+       PORT_EXPOSED = "${PORT_PARAMS}" 
        STAGING = "${ID_DOCKER}-staging"
        PRODUCTION = "${ID_DOCKER}-production"
      }
