@@ -7,7 +7,11 @@ pipeline {
        STAGING = "${ID_DOCKER}-staging"
        PRODUCTION = "${ID_DOCKER}-production"
      }
-     agent none
+     agent {
+         docker {
+             image 'node:latest'
+         }
+     }
      stages {
          stage('Build image') {
              agent any
