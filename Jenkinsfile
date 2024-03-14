@@ -3,7 +3,7 @@ pipeline {
     stages {
       stage('Cloning Git') {
         steps {
-          git "clone https://github.com/${Votre_ID_Github}/alpinehelloworld.git"
+          git "https://github.com/${Votre_ID_Github}/alpinehelloworld.git"
         }
       }
       stage('Build Image') {
