@@ -20,7 +20,7 @@ pipeline {
                         // Connexion à Docker Hub
                         docker.withRegistry('https://index.docker.io/v2/', "${DOCKERHUB_ID}") {
                             // Pousser l'image vers Docker Hub
-                            docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
+                            docker.image("${DOCKERHUB_NAME}:${IMAGE_TAG}").push()
                         }
                     }
                 }
