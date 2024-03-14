@@ -17,22 +17,6 @@ pipeline {
                 }
              }
         }
-     stage ('Install Node.js and npm') {
-         agent any
-         steps {
-              sh '''
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-            [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-            nvm install node
-            npm_path=$(which npm)
-            echo "npm is installed at: $npm_path"
-            export PATH=$PATH:$npm_path
-        '''
-         }
-     }
-
         stage('Run container based on builded image') {
             agent any
             steps {
@@ -94,8 +78,7 @@ pipeline {
     steps {
         script {
             sh '''
-                 echo PATH
-                $npm_path i -g heroku@7.68.0
+                npm i -g heroku@7.68.0
                 heroku container:login
                 heroku create $STAGING || echo "project already exist"
                 heroku container:push -a $STAGING web
@@ -116,7 +99,7 @@ stage('Push image in production and deploy it') {
     steps {
         script {
             sh '''
-                $npm_path i -g heroku@7.68.0
+                npm i -g heroku@7.68.0
                 heroku container:login
                 heroku create $PRODUCTION || echo "project already exist"
                 heroku container:push -a $PRODUCTION web
