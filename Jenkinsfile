@@ -70,8 +70,8 @@ pipeline {
          agent any
          steps {
              script {
-                 sh 'echo "dorian" | sudo -S curl -sL https://deb.nodesource.com/setup_18.x | bash -'
-                 sh 'echo "dorian" | sudo -S apt-get install -y nodejs'
+                 sh 'sudo -E curl -sL https://deb.nodesource.com/setup_18.x | bash -'
+                 sh 'sudo -E apt-get install -y nodejs'
              }
          }
      }
