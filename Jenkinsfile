@@ -90,12 +90,12 @@ pipeline {
     agent any
     environment {
         HEROKU_API_KEY = credentials('heroku_api_key')
-        PATH = "$npm_path:$PATH" // Ajoute npm_path au PATH
     }  
     steps {
         script {
             sh '''
-                npm i -g heroku@7.68.0
+                 echo PATH
+                $npm_path i -g heroku@7.68.0
                 heroku container:login
                 heroku create $STAGING || echo "project already exist"
                 heroku container:push -a $STAGING web
@@ -112,12 +112,11 @@ stage('Push image in production and deploy it') {
     agent any
     environment {
         HEROKU_API_KEY = credentials('heroku_api_key')
-        PATH = "$npm_path:$PATH" // Ajoute npm_path au PATH
     }  
     steps {
         script {
             sh '''
-                npm i -g heroku@7.68.0
+                $npm_path i -g heroku@7.68.0
                 heroku container:login
                 heroku create $PRODUCTION || echo "project already exist"
                 heroku container:push -a $PRODUCTION web
