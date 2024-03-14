@@ -66,17 +66,7 @@ pipeline {
              }
           }
       }    
-     stage('Install Node.js and npm') {
-         agent any
-         steps {
-             script {
-                 sh ''' 
-                    echo "dorian" | sudo -S curl -sL https://deb.nodesource.com/setup_14.x | sudo -S bash -
-                    echo "dorian" | sudo -S apt-get install -y nodejs
-               '''
-             }
-         }
-     }
+   
      stage('Push image in staging and deploy it') {
        when {
               expression { GIT_BRANCH == 'origin/master' }
