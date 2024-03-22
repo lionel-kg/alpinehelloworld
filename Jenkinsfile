@@ -79,7 +79,7 @@ pipeline {
     steps {
         script {
             sh '''
-                npm install -g heroku
+                npm install heroku
                 heroku container:login
                 heroku create $STAGING || echo "project already exist"
                 heroku container:push -a $STAGING web
@@ -100,7 +100,7 @@ stage('Push image in production and deploy it') {
     steps {
         script {
             sh '''
-                npm install -g heroku
+                npm install heroku
                 heroku container:login
                 heroku create $PRODUCTION || echo "project already exist"
                 heroku container:push -a $PRODUCTION web
