@@ -97,7 +97,7 @@ stage('Push image in production and deploy it') {
     environment {
         HEROKU_API_KEY = credentials('heroku_api_key')
     }  
-    steps {
+   steps {
         script {
             sh '''
                 npm install heroku
@@ -109,5 +109,13 @@ stage('Push image in production and deploy it') {
         }
     }
 }
-     }
+
+post {
+    success {
+        slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) - PROD URL => http://${PROD_APP_ENDPOINT} , STAGING URL => http://${STG_APP_ENDPOINT}")
+    }
+    failure {
+        slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    }   
+}
 }
