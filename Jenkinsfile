@@ -1,3 +1,5 @@
+@Library('shared-library')_
+
 pipeline {
      
      environment {
@@ -88,31 +90,10 @@ pipeline {
         }
     }
 }
-
-stage('Push image in production and deploy it') {
-    when {
-        expression { GIT_BRANCH == 'origin/master' }
-    }
-    agent any
-    environment {
-        HEROKU_API_KEY = credentials('heroku_api_key')
-    }  
-    steps {
-        script {
-            sh '''
-                npm install heroku
-                heroku container:login
-                heroku create $PRODUCTION || echo "project already exist"
-                heroku container:push -a $PRODUCTION web
-                heroku container:release -a $PRODUCTION web
-            '''
-             }
-         }
-     }
      }
 post {
     success {
-        slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) - PROD URL => https://${PROD_APP_ENDPOINT} , STAGING URL => https://${STG_APP_ENDPOINT}")
+        slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) -  STAGING URL => https://${STG_APP_ENDPOINT}")
     }
     failure {
         slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
